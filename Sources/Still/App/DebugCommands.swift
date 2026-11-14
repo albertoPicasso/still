@@ -43,15 +43,17 @@ enum DebugCommands {
         let demo = Profile(name: "demo", owner: "acme", repos: ["api", "web"])
         let app = AppContainer(persistence: InMemoryProfilePersistence(initial: [demo, Profile(name: "personal", owner: "me")]),
                                github: DemoGitHubService())
-        app.status.loadDemo()
-
-        for scheme in [ColorScheme.light, .dark] {
-            let renderer = ImageRenderer(content: PopoverView(viewModel: app.status).environment(\.colorScheme, scheme))
-            renderer.scale = 2
-            if let png = renderer.nsImage.flatMap(pngData) {
-                try? png.write(to: URL(fileURLWithPath: "\(dir)/popover-\(scheme == .dark ? "dark" : "light").png"))
+        for (name, mood) in [("calm", 0.0), ("busy", 0.5), ("storm", 1.0)] {
+            app.status.loadDemo(mood: mood)
+            for scheme in [ColorScheme.light, .dark] {
+                let renderer = ImageRenderer(content: PopoverView(viewModel: app.status).environment(\.colorScheme, scheme))
+                renderer.scale = 2
+                if let png = renderer.nsImage.flatMap(pngData) {
+                    try? png.write(to: URL(fileURLWithPath: "\(dir)/popover-\(name)-\(scheme == .dark ? "dark" : "light").png"))
+                }
             }
         }
+        app.status.loadDemo()
 
         for (name, mood) in [("calm", 0.0), ("busy", 0.5), ("storm", 1.0)] {
             for scheme in [ColorScheme.light, .dark] {

@@ -2,6 +2,21 @@
 
 # still.
 
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="Assets/screenshots/libre-dark.png">
+    <img src="Assets/screenshots/libre-light.png" alt="Todo libre" width="250">
+  </picture>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="Assets/screenshots/desplegando-dark.png">
+    <img src="Assets/screenshots/desplegando-light.png" alt="Desplegando" width="250">
+  </picture>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="Assets/screenshots/fallo-dark.png">
+    <img src="Assets/screenshots/fallo-light.png" alt="Algo falló" width="250">
+  </picture>
+</p>
+
 App de barra de menú para macOS que muestra un semáforo por entorno (por defecto DEV → `develop` y PRO → `main`) a partir de los workflows de GitHub Actions.
 
 - Verde: libre. Ámbar: hay pipelines en marcha o en cola. Rojo: el último run de algún workflow falló (durante las horas configuradas).

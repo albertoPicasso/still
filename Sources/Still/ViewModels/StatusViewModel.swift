@@ -148,15 +148,27 @@ final class StatusViewModel {
 
     // MARK: Diagnóstico
 
-    func loadDemo() {
+    // Datos de ejemplo para capturas: 0 todo libre, 0.5 desplegando, 1 algo falló
+    func loadDemo(mood: Double = 1) {
         let url = URL(string: "https://github.com")!
         guard environments.count >= 2 else { return }
+        let done = { (hours: Double) in FinishedRun(repo: "api", workflow: "Deploy", finishedAt: Date().addingTimeInterval(-hours * 3600),
+                                                    success: true, url: url) }
+        if mood == 0 {
+            statuses[environments[0].id] = EnvStatus(state: .free, lastDeploy: done(4))
+            statuses[environments[1].id] = EnvStatus(state: .free, lastDeploy: done(22))
+            return
+        }
         statuses[environments[0].id] = EnvStatus(state: .busy, active: [
             ActiveRun(id: 1, repo: "api", workflow: "Deploy to DEV", actor: "dev",
                       startedAt: Date().addingTimeInterval(-154), queued: false, expectedDuration: 300, url: url),
             ActiveRun(id: 2, repo: "web", workflow: "Deploy web to DEV", actor: "dev",
                       startedAt: Date().addingTimeInterval(-41), queued: false, expectedDuration: 420, url: url),
         ])
+        if mood < 1 {
+            statuses[environments[1].id] = EnvStatus(state: .free, lastDeploy: done(22))
+            return
+        }
         statuses[environments[1].id] = EnvStatus(state: .failed, failure: FinishedRun(
             repo: "api", workflow: "Deploy to PRODUCTION",
             finishedAt: Date().addingTimeInterval(-360), success: false, url: url))
