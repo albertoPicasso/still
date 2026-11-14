@@ -4,6 +4,7 @@ struct SettingsView: View {
     static let windowID = "settings"
 
     @Bindable var viewModel: SettingsViewModel
+    @Environment(\.colorScheme) private var scheme
 
     var body: some View {
         HStack(spacing: 0) {
@@ -11,12 +12,21 @@ struct SettingsView: View {
             Divider()
             detail.frame(minWidth: 460, maxWidth: .infinity, maxHeight: .infinity)
         }
+        .font(.still(13))
         .frame(width: 680, height: 620)
         .task { await viewModel.onAppear() }
     }
 
     private var sidebar: some View {
         VStack(spacing: 0) {
+            Text("still.")
+                .font(.logo(34))
+                .foregroundStyle(Theme.of(scheme).logo)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, 16)
+                .padding(.top, 18)
+                .padding(.bottom, 4)
+
             List(selection: $viewModel.selection) {
                 Section("Perfiles") {
                     ForEach(viewModel.profiles) { p in

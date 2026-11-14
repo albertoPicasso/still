@@ -1,10 +1,11 @@
 import SwiftUI
 
 @main
-struct PipelinesDropApp: App {
+struct StillApp: App {
     @State private var container: AppContainer
 
     init() {
+        if !DebugCommands.isActive { LegacyDefaults.migrateIfNeeded() }
         let container = AppContainer(persistence: DebugCommands.isActive
             ? InMemoryProfilePersistence()
             : UserDefaultsProfilePersistence())
@@ -25,7 +26,7 @@ struct PipelinesDropApp: App {
         }
         .menuBarExtraStyle(.window)
 
-        Window("Pipelines Drop", id: SettingsView.windowID) {
+        Window("still.", id: SettingsView.windowID) {
             SettingsView(viewModel: container.settings)
         }
         .windowResizability(.contentSize)

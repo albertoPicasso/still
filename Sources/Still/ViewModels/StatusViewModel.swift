@@ -29,6 +29,8 @@ final class StatusViewModel {
 
     var menuBarStates: [EnvState] { environments.map { status(for: $0).state } }
 
+    var seaMood: Double { menuBarStates.seaMood }
+
     var hint: Hint? {
         guard let p = store.active else { return .noProfile }
         return p.repos.isEmpty ? .noRepos : nil

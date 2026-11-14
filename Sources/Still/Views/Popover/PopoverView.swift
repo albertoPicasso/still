@@ -9,8 +9,8 @@ struct PopoverView: View {
     var body: some View {
         let theme = Theme.of(scheme)
         VStack(alignment: .leading, spacing: 0) {
-            WavesView(color: theme.waves, boost: theme.wavesBoost)
-                .frame(height: 72)
+            SeaView(mood: viewModel.seaMood, night: scheme == .dark)
+                .frame(height: 144)
 
             Group {
                 switch viewModel.hint {
@@ -25,11 +25,11 @@ struct PopoverView: View {
                     }
                 }
             }
-            .padding(.top, -14)
+            .padding(.top, -6)
 
             if let error = viewModel.errorMessage {
                 Text(error)
-                    .font(.system(size: 11))
+                    .font(.still(11))
                     .foregroundStyle(theme.red)
                     .padding(.horizontal, 24)
                     .padding(.top, 4)
@@ -38,30 +38,77 @@ struct PopoverView: View {
 
             Rectangle().fill(theme.line).frame(height: 0.5).padding(.horizontal, 24).padding(.top, 8)
 
-            VStack(spacing: 0) {
-                if viewModel.profiles.count > 1 {
-                    ProfileMenu(viewModel: viewModel, theme: theme)
-                }
-                if let url = viewModel.ownerURL {
-                    MenuRow(title: "Abrir en GitHub", trailing: "→", theme: theme) { openURL(url) }
-                }
-                MenuRow(title: "Actualizar", trailing: "⌘R", theme: theme, action: viewModel.refreshNow)
-                    .keyboardShortcut("r")
-                MenuRow(title: "Ajustes", trailing: "⌘,", theme: theme, action: openSettings)
-                    .keyboardShortcut(",")
-                MenuRow(title: "Salir", trailing: "⌘Q", theme: theme) { NSApp.terminate(nil) }
-                    .keyboardShortcut("q")
-            }
-            .padding(.vertical, 8)
+            OptionsMenu(viewModel: viewModel, theme: theme, openSettings: openSettings)
+                .padding(.vertical, 6)
         }
         .frame(width: 330)
         .background(theme.background)
         .foregroundStyle(theme.text)
+        .background {
+            // Atajos de teclado siempre activos, aunque el menú de opciones esté cerrado
+            Group {
+                Button("", action: viewModel.refreshNow).keyboardShortcut("r")
+                Button("", action: openSettings).keyboardShortcut(",")
+                Button("") { NSApp.terminate(nil) }.keyboardShortcut("q")
+            }
+            .opacity(0)
+            .allowsHitTesting(false)
+            .frame(width: 0, height: 0)
+        }
     }
 
     private func openSettings() {
         NSApp.activate(ignoringOtherApps: true)
         openWindow(id: SettingsView.windowID)
+    }
+}
+
+// Opciones agrupadas: se despliegan al pasar el cursor por encima
+private struct OptionsMenu: View {
+    @Bindable var viewModel: StatusViewModel
+    let theme: Theme
+    let openSettings: () -> Void
+    @Environment(\.openURL) private var openURL
+    @State private var open = false
+
+    var body: some View {
+        VStack(spacing: 0) {
+            Button { setOpen(true) } label: {
+                HStack {
+                    Text("Opciones")
+                    Spacer()
+                    Image(systemName: "chevron.down")
+                        .font(.system(size: 10, weight: .semibold))
+                        .rotationEffect(.degrees(open ? 180 : 0))
+                }
+                .font(.still(13, .medium))
+                .foregroundStyle(open ? theme.text : theme.text2)
+                .padding(.horizontal, 24)
+                .padding(.vertical, 9)
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+
+            if open {
+                VStack(spacing: 0) {
+                    if viewModel.profiles.count > 1 {
+                        ProfileMenu(viewModel: viewModel, theme: theme)
+                    }
+                    if let url = viewModel.ownerURL {
+                        MenuRow(title: "Abrir en GitHub", trailing: "→", theme: theme) { openURL(url) }
+                    }
+                    MenuRow(title: "Actualizar", trailing: "⌘R", theme: theme, action: viewModel.refreshNow)
+                    MenuRow(title: "Ajustes", trailing: "⌘,", theme: theme, action: openSettings)
+                    MenuRow(title: "Salir", trailing: "⌘Q", theme: theme) { NSApp.terminate(nil) }
+                }
+                .transition(.opacity.combined(with: .move(edge: .top)))
+            }
+        }
+        .onHover { setOpen($0) }
+    }
+
+    private func setOpen(_ value: Bool) {
+        withAnimation(.easeOut(duration: 0.18)) { open = value }
     }
 }
 
@@ -73,11 +120,11 @@ private struct HintView: View {
     var body: some View {
         HStack(spacing: 14) {
             Circle().fill(theme.text3).frame(width: 8, height: 8)
-            Text(text).font(.system(size: 15, design: .rounded))
+            Text(text).font(.still(15, .semibold))
             Spacer()
             Button("Configurar →", action: action)
                 .buttonStyle(.plain)
-                .font(.system(size: 12))
+                .font(.still(12))
                 .foregroundStyle(theme.text2)
         }
         .padding(.horizontal, 24)
@@ -102,7 +149,7 @@ private struct ProfileMenu: View {
                 Spacer()
                 Text(viewModel.activeProfileName).foregroundStyle(theme.text3)
             }
-            .font(.system(size: 12))
+            .font(.still(13))
             .foregroundStyle(theme.text2)
             .contentShape(Rectangle())
         }
@@ -128,7 +175,7 @@ struct MenuRow: View {
                 Spacer()
                 Text(trailing).foregroundStyle(theme.text3)
             }
-            .font(.system(size: 12))
+            .font(.still(13, .medium))
             .foregroundStyle(hover ? theme.text : theme.text2)
             .padding(.horizontal, 24)
             .padding(.vertical, 9)

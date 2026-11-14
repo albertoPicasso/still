@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-@testable import PipelinesDrop
+@testable import Still
 
 private let now = Date(timeIntervalSince1970: 1_800_000_000)
 private let hour: TimeInterval = 3600
@@ -146,4 +146,12 @@ struct ProfileStoreTests {
         p.repos.append("web")
         #expect(p.pollingKey != key)
     }
+}
+
+@Suite("Estado del mar")
+struct SeaMoodTests {
+    @Test func calmaSiTodoEstaLibre() { #expect([EnvState.free, .free].seaMood == 0) }
+    @Test func desplegandoSiAlgoEstaEnMarcha() { #expect([EnvState.free, .busy].seaMood == 0.5) }
+    @Test func enColaTambienCuentaComoDesplegando() { #expect([EnvState.queued].seaMood == 0.5) }
+    @Test func temporalSiAlgoFallo() { #expect([EnvState.busy, .failed].seaMood == 1) }
 }

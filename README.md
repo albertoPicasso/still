@@ -1,4 +1,6 @@
-# Pipelines Drop
+<p align="center"><img src="Assets/icon.png" alt="still." width="128"></p>
+
+# still.
 
 App de barra de menú para macOS que muestra un semáforo por entorno (por defecto DEV → `develop` y PRO → `main`) a partir de los workflows de GitHub Actions.
 
@@ -33,7 +35,7 @@ Abre el desplegable → **Ajustes**:
 ## Arquitectura (MVVM)
 
 ```
-Sources/PipelinesDrop/
+Sources/Still/
 ├── App/          Composición (AppContainer) y modos de diagnóstico
 ├── Models/       Profile, EnvStatus y los DTO de la API de GitHub
 ├── Services/
@@ -47,6 +49,15 @@ Sources/PipelinesDrop/
 - `StatusCalculator` es lógica pura: de runs de GitHub a estado del semáforo.
 - Los servicios se inyectan por protocolo (`GitHubService`, `ProfilePersistence`), así que se pueden sustituir en tests.
 
+## Icono
+
+El icono está en `Assets/AppIcon.icns`. Para regenerarlo desde el código (`AppIconView`):
+
+```bash
+build/Still.app/Contents/MacOS/Still --icon /tmp/icono
+iconutil -c icns /tmp/icono/AppIcon.iconset -o Assets/AppIcon.icns
+```
+
 ## Tests
 
 ```bash
@@ -56,7 +67,7 @@ Sources/PipelinesDrop/
 ## Diagnóstico
 
 ```bash
-build/PipelinesDrop.app/Contents/MacOS/PipelinesDrop --dump                      # estado del perfil activo
-build/PipelinesDrop.app/Contents/MacOS/PipelinesDrop --dump <owner> <repo,repo>  # prueba sin tocar los perfiles
-build/PipelinesDrop.app/Contents/MacOS/PipelinesDrop --snapshot <dir>            # PNG del desplegable y de Ajustes
+build/Still.app/Contents/MacOS/Still --dump                      # estado del perfil activo
+build/Still.app/Contents/MacOS/Still --dump <owner> <repo,repo>  # prueba sin tocar los perfiles
+build/Still.app/Contents/MacOS/Still --snapshot <dir>            # PNG del desplegable y de Ajustes
 ```

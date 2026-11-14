@@ -16,20 +16,20 @@ struct EnvSectionView: View {
                     .lineLimit(1)
                     .frame(minWidth: 34, alignment: .leading)
                 Text(presentation.title)
-                    .font(.system(size: 16, design: .rounded))
+                    .font(.still(17, .semibold))
                     .foregroundStyle(titleColor)
                 Spacer()
                 if let url = presentation.logURL {
                     Button("Ver log →") { openURL(url) }
                         .buttonStyle(.plain)
-                        .font(.system(size: 12))
+                        .font(.still(12, .medium))
                         .foregroundStyle(theme.text2)
                 }
             }
 
             if let subtitle = presentation.subtitle {
                 Text(subtitle)
-                    .font(.system(size: 12))
+                    .font(.still(13))
                     .foregroundStyle(theme.text3)
                     .padding(.leading, 70)
                     .padding(.top, 4)
@@ -76,12 +76,13 @@ struct RunRowView: View {
             VStack(alignment: .leading, spacing: 0) {
                 HStack(alignment: .firstTextBaseline) {
                     Text(run.repo)
-                        .font(.system(size: 13))
+                        .font(.still(13))
                         .foregroundStyle(theme.text2)
                         .lineLimit(1)
                     Spacer()
                     timing(progress)
-                        .font(.system(size: 12, design: .monospaced))
+                        .font(.still(12))
+                        .monospacedDigit()
                 }
                 ProgressLine(fraction: progress.fraction, theme: theme)
                     .padding(.top, 10)

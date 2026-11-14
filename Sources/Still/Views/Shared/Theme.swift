@@ -1,7 +1,7 @@
 import SwiftUI
 import AppKit
 
-// Paleta cálida (crema, albaricoque y salvia) en claro y oscuro
+// Paleta de agua: calma en claro, océano profundo en oscuro
 struct Theme {
     let background: Color
     let text: Color
@@ -12,37 +12,34 @@ struct Theme {
     let apricotText: Color
     let sage: Color
     let red: Color
-    let waves: Color
-    let wavesBoost: Double
+    let logo: Color
 
     static func of(_ scheme: ColorScheme) -> Theme { scheme == .dark ? dark : light }
 
     static let light = Theme(
-        background: Color(hex: 0xFFFBF2),
-        text: Color(hex: 0x1B1D1B),
-        text2: Color(hex: 0x1B1D1B).opacity(0.66),
-        text3: Color(hex: 0x1B1D1B).opacity(0.42),
-        line: Color(hex: 0x1B1D1B).opacity(0.09),
-        apricot: Color(hex: 0xE09A3E),
+        background: Color(hex: 0xF0F7F4),
+        text: Color(hex: 0x1F4E63),
+        text2: Color(hex: 0x1F4E63).opacity(0.70),
+        text3: Color(hex: 0x1F4E63).opacity(0.46),
+        line: Color(hex: 0x1F4E63).opacity(0.10),
+        apricot: Color(hex: 0xF0A23A),
         apricotText: Color(hex: 0xB06A12),
-        sage: Color(hex: 0x688D62),
-        red: Color(hex: 0xC9603F),
-        waves: Color(hex: 0x688D62),
-        wavesBoost: 1.7
+        sage: Color(hex: 0x4FA595),
+        red: Color(hex: 0xD2604B),
+        logo: Color(hex: 0x1F4E63)
     )
 
     static let dark = Theme(
-        background: Color(hex: 0x171917),
-        text: Color(hex: 0xFFF6E1),
-        text2: Color(hex: 0xFFF6E1).opacity(0.62),
-        text3: Color(hex: 0xFFF6E1).opacity(0.38),
-        line: Color(hex: 0xFFF6E1).opacity(0.08),
-        apricot: Color(hex: 0xFAC173),
-        apricotText: Color(hex: 0xFAC173),
-        sage: Color(hex: 0x8FAE88),
-        red: Color(hex: 0xE58B6D),
-        waves: Color(hex: 0xFAC173),
-        wavesBoost: 1.3
+        background: Color(hex: 0x0B1B24),
+        text: Color(hex: 0xE4F1EE),
+        text2: Color(hex: 0xE4F1EE).opacity(0.64),
+        text3: Color(hex: 0xE4F1EE).opacity(0.40),
+        line: Color(hex: 0xE4F1EE).opacity(0.09),
+        apricot: Color(hex: 0xF2B25C),
+        apricotText: Color(hex: 0xF2B25C),
+        sage: Color(hex: 0x7CC9B6),
+        red: Color(hex: 0xE5806B),
+        logo: Color(hex: 0x7CC9B6)
     )
 
     func color(for state: EnvState) -> Color {
@@ -53,6 +50,14 @@ struct Theme {
         case .unknown: text3
         }
     }
+}
+
+extension Font {
+    // DM Sans para el texto y Bagel Fat One solo para el logo
+    static func still(_ size: CGFloat, _ weight: Font.Weight = .regular) -> Font {
+        .custom("DM Sans", size: size).weight(weight)
+    }
+    static func logo(_ size: CGFloat) -> Font { .custom("Bagel Fat One", size: size) }
 }
 
 extension Color {
@@ -84,8 +89,8 @@ enum MenuBarIcon {
 
     private static func color(_ s: EnvState) -> NSColor {
         switch s {
-        case .free: NSColor(srgbRed: 0.56, green: 0.68, blue: 0.53, alpha: 1)
-        case .busy, .queued: NSColor(srgbRed: 0.94, green: 0.68, blue: 0.33, alpha: 1)
+        case .free: NSColor(srgbRed: 0.31, green: 0.65, blue: 0.58, alpha: 1)
+        case .busy, .queued: NSColor(srgbRed: 0.95, green: 0.64, blue: 0.25, alpha: 1)
         case .failed: NSColor(srgbRed: 0.88, green: 0.45, blue: 0.33, alpha: 1)
         case .unknown: .secondaryLabelColor
         }

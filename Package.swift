@@ -2,17 +2,17 @@
 import PackageDescription
 
 let package = Package(
-    name: "PipelinesDrop",
+    name: "Still",
     platforms: [.macOS(.v15)],
     targets: [
         .executableTarget(
-            name: "PipelinesDrop",
-            path: "Sources/PipelinesDrop"
+            name: "Still",
+            path: "Sources/Still"
         ),
         .testTarget(
-            name: "PipelinesDropTests",
-            dependencies: ["PipelinesDrop"],
-            path: "Tests/PipelinesDropTests"
+            name: "StillTests",
+            dependencies: ["Still"],
+            path: "Tests/StillTests"
         ),
     ],
     swiftLanguageModes: [.v5]
