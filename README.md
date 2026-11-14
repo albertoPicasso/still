@@ -13,7 +13,7 @@ App de barra de menú para macOS que muestra un semáforo por entorno (por defec
 - Command Line Tools (`xcode-select --install`); no hace falta Xcode
 - [GitHub CLI](https://cli.github.com) con sesión iniciada: `brew install gh` y `gh auth login`
 
-La app usa la sesión de `gh` del ordenador; no guarda tokens propios.
+**Still necesita que `gh` esté configurado**: instalado y con la sesión iniciada. Comprueba que `gh auth status` muestra tu cuenta. La app detecta esa sesión sola y la usa para leer tus pipelines; sin ella no verá nada. No guarda tokens propios.
 
 ## Instalar
 
