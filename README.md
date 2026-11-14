@@ -1,19 +1,19 @@
-<p align="center"><img src="Assets/icon.png" alt="still." width="128"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/albertoPicasso/still./main/Assets/icon.png" alt="still." width="128"></p>
 
 # still.
 
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="Assets/screenshots/libre-dark.png">
-    <img src="Assets/screenshots/libre-light.png" alt="Todo libre" width="250">
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/albertoPicasso/still./main/Assets/screenshots/libre-dark.png">
+    <img src="https://raw.githubusercontent.com/albertoPicasso/still./main/Assets/screenshots/libre-light.png" alt="Todo libre" width="250">
   </picture>
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="Assets/screenshots/desplegando-dark.png">
-    <img src="Assets/screenshots/desplegando-light.png" alt="Desplegando" width="250">
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/albertoPicasso/still./main/Assets/screenshots/desplegando-dark.png">
+    <img src="https://raw.githubusercontent.com/albertoPicasso/still./main/Assets/screenshots/desplegando-light.png" alt="Desplegando" width="250">
   </picture>
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="Assets/screenshots/fallo-dark.png">
-    <img src="Assets/screenshots/fallo-light.png" alt="Algo falló" width="250">
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/albertoPicasso/still./main/Assets/screenshots/fallo-dark.png">
+    <img src="https://raw.githubusercontent.com/albertoPicasso/still./main/Assets/screenshots/fallo-light.png" alt="Algo falló" width="250">
   </picture>
 </p>
 
