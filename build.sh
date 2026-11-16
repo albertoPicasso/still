@@ -2,6 +2,7 @@
 # Compila y empaqueta Still.app (sin Xcode).
 #   ./build.sh            -> build/Still.app
 #   ./build.sh --install  -> además la instala en /Applications y la abre
+#   ./build.sh --dmg      -> además crea build/Still.dmg para repartirla
 set -euo pipefail
 cd "$(dirname "$0")"
 
@@ -59,4 +60,14 @@ if [[ "${1:-}" == "--install" ]]; then
     cp -R "$APP" "$DEST/"
     open "$DEST/Still.app"
     echo "Instalada en $DEST/Still.app"
+fi
+
+if [[ "${1:-}" == "--dmg" ]]; then
+    STAGE="$(mktemp -d)"
+    cp -R "$APP" "$STAGE/"
+    ln -s /Applications "$STAGE/Applications"
+    rm -f build/Still.dmg
+    hdiutil create -volname "still." -srcfolder "$STAGE" -ov -format UDZO build/Still.dmg >/dev/null
+    rm -rf "$STAGE"
+    echo "Creado build/Still.dmg"
 fi
